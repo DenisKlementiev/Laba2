@@ -1,0 +1,353 @@
+/**
+*Валидация(проверка каждого символа на соответствие заданию);
+*@global res,str,dl;
+*@param start;
+*@return res;
+*/
+function validate(start){
+	var res = true;
+	var dl = start.length;
+	var str = "";
+	
+	for(var i = 0; i < dl; i++){
+		if(start[i] != 1 && start[i] != 0){
+			str = "Данные введены неверно";
+			res = false;
+		}
+		if(dl != 16){
+			str = "Данные введены неверно";
+			res = false;
+		}
+	}
+	if(!res){
+		alert(str);
+	}
+	
+	return res;
+}
+/**
+*функция делает из строки красивый массив;
+*@global res,dl,count;
+*@param start;
+*@return start;
+*/
+function madeItLine(start){
+	res = true;
+	var dl = start.length;
+	var count = 0;
+	
+	for(var i = 0; i < dl; i++){
+		if(start[i] == " "){
+			start.splice(i,1);
+			dl = dl - 1;
+		}
+		if(start[i] == "\n"){
+			count++;
+		}
+	}
+	if(count != 3){
+		res = false;
+		str = "Введено не 4 строки или не 4 столбца, пожалуйста, введите корректно"
+		return str;
+	}
+	for(var i = 0; i < dl; i++){
+		if(start[i] == "\n"){
+			start.splice(i,1);
+			dl = dl - 1;
+		}
+	}
+	
+	if(!res){
+		alert(str);
+	}
+	return start;
+}
+/**
+*Вывод массива на страничку;
+*@global str;
+*@param start;
+*@return str;
+*/
+function putMatrix(start){
+	var str = "Ваша матрица 4x4: <br>";
+	
+	for(var i = 0; i < 16; i++){
+			str = str + start[i] + " ";
+			if(i == 3 ||i == 7 || i == 11){
+				str = str + "<br>"
+			}
+	}
+	
+	return str;
+}
+/**
+*Рефлективность(проверка на рефлективность);
+*Если все числа на главной диагонали равны "1", то такое отношенипе рефлективно;
+*@global res,dl;
+*@param start;
+*@return res;
+*/
+function reflexivity(start){
+	var res = "";
+	var dl = start.length;
+	for(var i = 0; i < dl; i++){
+		if(start[0] == 1 && start[5] == 1 && start[10] == 1 && start[15] == 1){
+			res = "<b>Отношение рефлексивно</b>";
+		} else {
+			res = "<b>Отношение не рефлексивно</b>";
+		}
+	}
+	return res;
+}
+/**
+*Cоздание двумерного массива из полученной строки;
+*@global mas1,mas2,mas3,mas4,masOb;
+*@param start;
+*@return masOb;
+*/
+function getItTyMer(start){
+	var mas1 = [];
+	var mas2 = [];
+	var mas3 = [];
+	var mas4 = [];
+	var masOb = [];
+	
+	for(var i = 0; i < 4 ; i++){
+		mas1[i] = start[i];
+	}
+	for(var i = 4; i < 8 ; i++){
+		mas2[i - 4] = start[i];
+	}
+	for(var i = 8; i < 12 ; i++){
+		mas3[i- 8] = start[i];
+	}
+	for(var i = 12; i < 16 ; i++){
+		mas4[i - 12] = start[i];
+	}
+	masOb[0] = mas1;
+	masOb[1] = mas2;
+	masOb[2] = mas3;
+	masOb[3] = mas4;
+	
+	return masOb;
+}
+/**
+*Симметричность(проверка на симметричность);
+*Если введенная матрица равняется транспонированной, то такое отношение симметрично;
+*@global str,flag;
+*@param start, transponMatr;
+*@return str;
+*/
+function symmetry(start, transponMatr){
+	var str = "";
+	var flag = false;
+	for (var i = 0; i < 4; i++){
+		for(var j = 0; j < 4; j++){
+			if(start[i][j] != transponMatr[i][j]){
+				flag = true;
+				break;
+			}
+		}
+	}
+	if(!flag){
+		str = "<b>Отношение симметрично</b>";
+	} else {
+		str = "<b>Отношение не симметрично</b>";
+	}
+	return str;
+}
+/**
+*Транспонирование(Создание транспонированной матрицы);
+*@global str,arr;
+*@param start;
+*@return arr;
+*/
+function transposed(start){
+	var str = "Транспонированная матрица : <br>";
+	var arr = [];
+	for (var i = 0; i < 4; i++) {
+		arr.push([0])
+		for (var j = 0; j < 4; j++) {
+			arr[i][j] = 0;
+		}
+	}
+	for (var i = 0; i < 4; i++){
+		for(var j = 0; j < 4; j++){
+			arr[i][j] = start[j][i];
+			str = str + arr[i][j] + " ";
+		}
+		str = str + "<br>";
+	}
+	return arr;
+}
+/**
+*Вывод транспонированной матрицы на страницу;
+*@global str,arr;
+*@param start;
+*@return res;
+*/
+function Vtransposed(start){
+	var str = "Транспонированная матрица : <br>";
+	var arr = [];
+	for (var i = 0; i < 4; i++) {
+		arr.push([0])
+		for (var j = 0; j < 4; j++) {
+			arr[i][j] = 0;
+		}
+	}
+	for (var i = 0; i < 4; i++){
+		for(var j = 0; j < 4; j++){
+			arr[i][j] = start[j][i];
+			str = str + arr[i][j] + " ";
+		}
+		str = str + "<br>";
+	}
+	return str;
+}	
+/**
+*Вывод перемноженной введенной матрицы на транспонированную;
+*@global perem, str;
+*@param start, transponMatr;
+*@return str;
+*/
+function poiskPeremnoj(start, transponMatr){
+	var perem = [];
+	var str = "Введенная матрица, умноженная на транспонированную матрицу : <br>";
+	for (var i = 0; i < 4; i++) {
+		perem.push([0])
+		for (var j = 0; j < 4; j++) {
+			perem[i][j] = 0;
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			for (var l = 0; l < 4; l++) {						
+				perem[i][j] += start[i][l]*transponMatr[l][j];
+			}
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			if (perem[i][j] > 1) {
+				perem[i][j] = 1;
+			}
+			str = str + perem[i][j] + " ";
+		}
+		str = str + "<br>";
+	}
+
+	return str;
+}
+/**
+*Перемножение введенной матрицы на транспонированную;
+*@global perem;
+*@param start, transponMatr;
+*@return perem;
+*/
+function peremnojV(start, transponMatr){
+	var perem = [];
+	for (var i = 0; i < 4; i++) {
+		perem.push([0])
+		for (var j = 0; j < 4; j++) {
+			perem[i][j] = 0;
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			for (var l = 0; l < 4; l++) {						
+				perem[i][j] += start[i][l]*transponMatr[l][j];
+			}
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			if (perem[i][j] > 1) {
+				perem[i][j] = 1;
+			}
+		}
+	}
+
+	return perem;
+}
+/**
+*Кососимметрия(проверка на кососимметричность);
+*Если в перемноженной матрице все элементы кроме тех что на главной диагонали равны нулям, то такое отношение кососимметрично
+*@global str, flag;
+*@param peremnoj;
+*@return str;
+*/
+function skewSymmetry(peremnoj){
+	str = "";
+	var flag = true;
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			if(flag == false){
+				break;
+			}				
+			if(i == j){
+				break;
+			}
+			if(peremnoj[i][j] == 0){
+				flag = true;
+			} else {
+				flag = false;
+				break;	
+			}
+		}
+	}
+	if(flag){
+		str = "<b>Отношение кососимметрично</b>";
+	} else {
+		str = "<b>Отношение не кососимметрично</b>";
+	}
+	
+	return str;
+}
+/**
+*Транзитивность(проверка на транзитивность отношения);
+Если количество единиц в перемноженной матрице меньше или равно количеству нудей то такое отношение транзитивно
+*@global str, flag;
+*@param peremnoj;
+*@return str;
+*/
+function transitivity(peremnoj){
+	var countNul = 0;
+	var countEd = 0;
+	var str = "";
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			if(peremnoj[i][j] == 0){
+				countNul++;
+			} else {
+				countEd++;
+			}
+		}
+	}
+	if(countEd <= countNul ){
+		str = "<b>Отношение транзитивно</b>";
+	} else {
+		str = "<b>Отношение не транзитивно</b>";
+	}
+	
+	return str;
+}
+
+function getDataUser(){
+	var start = document.getElementById('matrix').value;
+	start = start.split('');
+	start = madeItLine(start);
+	if( !validate(start) ){
+		return;
+	}
+		document.getElementById('result1').innerHTML = putMatrix(start);
+		document.getElementById('result2').innerHTML = reflexivity(start);
+		start = getItTyMer(start);
+		var transponMatr = transposed(start);
+		document.getElementById('result3').innerHTML = symmetry(start,transponMatr);
+		document.getElementById('result4').innerHTML = Vtransposed(start);
+		document.getElementById('result5').innerHTML = poiskPeremnoj(start, transponMatr);
+		var peremnoj = peremnojV(start, transponMatr);
+		document.getElementById('result6').innerHTML = skewSymmetry(peremnoj);
+		document.getElementById('result7').innerHTML = transitivity(peremnoj);
+	
+}
